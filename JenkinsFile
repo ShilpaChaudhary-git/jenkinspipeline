@@ -1,15 +1,14 @@
 pipeline{
     agent any
-    environment {
-        PATH = "${PATH}:${getTerraformPath()}"
-    }
+    //
     
+
     //comment
     stages{
-        stage("terraform init and apply"){
+        stage("terraform init"){
             steps{
                 sh"terraform init"
-                sh"terraform apply"
+                #sh"terraform apply"
             }
         }
     }
