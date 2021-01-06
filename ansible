@@ -1,0 +1,16 @@
+pipeline{
+    agent any
+    stages{
+        stage("SCM Checkout"){
+            steps{
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '77c115b9-b302-46d1-b9c0-9ace965bbb10', url: 'https://github.com/ShilpaChaudhary-git/AnsibleDemo']]])
+            }
+        }
+        stage("Execute Ansible"){
+            steps{
+                //sh "ssh-copy-id -i ~/.ssh/mykey user@host"
+                ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible2', inventory: 'aws.aws_ec2.yml', playbook: 'httpd.yml'
+            }
+        }
+    }
+}
